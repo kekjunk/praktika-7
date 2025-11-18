@@ -1,0 +1,45 @@
+//Практика 13 Задание 2
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <set>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;    
+    if (n < 1 || n > 1000) {
+        cerr << "Incorrect number of words" << endl;
+        return 1;
+    }    
+    map<int, set<string>> index;    
+    for (int i = 0; i < n; i++) {
+        string word;
+        int page;
+        cin >> word >> page;
+        if (word.length() < 1 || word.length() > 16) {
+            cerr << "Incorrect word length" << endl;
+            return 1;
+        }        
+        if (page < 1 || page > 1000) {
+            cerr << "Incorrect page number" << endl;
+            return 1;
+        }
+        for (char c : word) {
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))) {
+                cerr << "The word contains non-Latin characters" << endl;
+                return 1;
+            }
+        }
+        index[page].insert(word);
+    }
+    for (const auto& [page, words] : index) {
+        cout << page;
+        for (const string& word : words) {
+            cout << " " << word;
+        }
+        cout << endl;
+    }   
+    return 0;
+}
